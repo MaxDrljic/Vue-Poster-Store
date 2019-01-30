@@ -22,13 +22,18 @@
         </div>
         <div class="main">
             <div class="products">
-                <div class="product" v-for="item in items" :key="item.id">
+                <div class="product" v-for="(item, index) in items" :key="item.id">
                     <h4 class="product-title">{{ item.title }}</h4>
-                    <button class="add-to-cart" @click="addItem()">Add to cart</button>
+                    <button class="add-to-cart" @click="addItem(index)">Add to cart</button>
                 </div>
             </div>
             <div class="cart">
                 <h2>Shopping Cart</h2>
+                <ul>
+                    <li class="cart-item" v-for="item in cart">
+                        <div class="item-title">{{ item.title }}</div>
+                    </li>
+                </ul>
                 <div>
                     <div>Total {{ total }} $</div>
                 </div>

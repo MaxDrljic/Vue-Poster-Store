@@ -8,11 +8,13 @@ new Vue({
       { title: 'Item 3' },
       { title: 'Item 4' },
       { title: 'Item 5' },
-    ]
+    ],
+    cart: []
   },
   methods: {
-    addItem() {
+    addItem(index) {
       this.total += 9.99;
+      this.cart.push(this.items[index]);
     }
   }
 });
