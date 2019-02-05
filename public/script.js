@@ -11,9 +11,17 @@ new Vue({
       { id: 4, title: 'Item 4' },
       { id: 5, title: 'Item 5' },
     ],
-    cart: []
+    cart: [],
+    search: ''
   },
   methods: {
+    onSubmit() {
+      this.$http
+      .get('/search/'.concat(this.search))
+      .then(function(res) {
+        console.log(res);
+      });
+    },
     addItem(index) {
       this.total += PRICE;
       let item = this.items[index];
