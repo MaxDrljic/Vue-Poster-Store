@@ -1,4 +1,5 @@
 const PRICE = 9.99;
+const LOAD_NUM = 10;
 
 new Vue({
   el: '#app',
@@ -6,20 +7,28 @@ new Vue({
     total: 0,
     items: [],
     cart: [],
+    results: [],
     newSearch: 'anime',
     lastSearch: '',
     loading: false,
     price: PRICE
   },
   methods: {
+    appendItems() {
+      if (this.items.length < this.results.length) {
+        let append = this.results.slice(this.items.length, this.items.length + LOAD_NUM);
+        this.items = this.items.concat(append);
+      }
+    },
     onSubmit() {
       this.items = [];
       this.loading = true;
       this.$http
       .get('/search/'.concat(this.newSearch))
-      .then(function(res) {
+      .then((res) => {
         this.lastSearch = this.newSearch;
-        this.items = res.data;
+        this.results = res.data;
+        this.appendItems();
         this.loading = false;
       });
     },
@@ -67,5 +76,14 @@ new Vue({
   },
   mounted() {
     this.onSubmit();
+
+    // Scroll Monitor
+    // let vueInstance is solving the problem going around the this.something error
+    let vueInstance = this;
+    let elem = document.getElementById('product-list-bottom');
+    let watcher = scrollMonitor.create(elem);
+    watcher.enterViewport(function() {
+      vueInstance.appendItems();
+    });
   },
 });
