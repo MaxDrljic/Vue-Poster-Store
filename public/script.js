@@ -14,6 +14,9 @@ new Vue({
     price: PRICE
   },
   methods: {
+    noMoreItems() {
+      return this.items.length === this.results.length && this.results.length > 0
+    },
     appendItems() {
       if (this.items.length < this.results.length) {
         let append = this.results.slice(this.items.length, this.items.length + LOAD_NUM);
